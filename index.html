@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <title>To do app project</title>
+</head>
+<body>
+    <div id="parent">
+        <div class="left-box">
+        <h1 id="white1"><span id="dark-white"><b>Tasks</b></span> List</h1>
+        <h2 class="white">No items in the todo list</h2>
+        </div>
+        <div class="side">
+            <a href="#"><i class="fa-solid fa-circle-plus icon1" onclick="show_upfront()"></i></a>
+            <h3 class="white2">Add Lists</h3>
+        </div>
+
+        <div id="main_parent"></div>
+
+    </div>
+
+    <div id="upfront">
+        <h2>Add New List</h2>
+        <label for="name"></label>
+        <input type="text" id="name" value=""><br><br>
+        <button onclick="addtask()">Add</button>
+        <button onclick="close1()">Close</button>
+    </div>
+    <div id="upfront1">
+        <h2>Add New Item</h2>
+        <label for="name1"></label>
+        <input type="text" id="name1" value=""><br><br>
+        <button id="btn">Add</button>
+        <button onclick="close2()">Close</button>
+    </div>
+    <script src="./logic.js"></script>
+</body>
+</html>
