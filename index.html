@@ -1,42 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="./style.css">
-    <title>To do app project</title>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Todo App</title>
 </head>
-<body>
-    <div id="parent">
-        <div class="left-box">
-        <h1 id="white1"><span id="dark-white"><b>Tasks</b></span> List</h1>
-        <h2 class="white">No items in the todo list</h2>
-        </div>
-        <div class="side">
-            <a href="#"><i class="fa-solid fa-circle-plus icon1" onclick="show_upfront()"></i></a>
-            <h3 class="white2">Add Lists</h3>
-        </div>
+<body style="background-color: rgb(220, 206, 206);">
+    <span id="topheader">
+        <h1 style="color:rgb(14, 200, 45);font-size:35px"> Tasks  List</h1>
+        <h3 style="color:rgb(33, 3, 45);font-size:30px" id="myBtn">
+            <i class="fa fa-plus-circle" style="color: #2d0428;" id="p"></i> Add New </h3>
+        
+    </span>
+   
 
-        <div id="main_parent"></div>
+    <span id="topheadertwo" style="display: none;">
+        <h2 style="color:rgb(50, 178, 28)" onclick="backClick()"> 
+            <i class="fa fa-arrow-circle-left" style="color: #bbd67b;"></i> Back</h2>
+        <h2 style="color:rgb(241, 67, 67);font-size: 45px;" id="head_task_title">Task Title</h2>
+        <h2 style="color:rgb(91, 201, 72)" id="taskBtn" onclick="showTaskModalOnly()">
+            <i class="fa fa-plus-circle" style="color: #d46ae7;"></i> Add New </h2>
+        
+    </span>
 
+    <span id="overview">
+        <div class="contener" id="div-1">
+            <p id="noitem" style="color: rgb(87, 85, 82); font-size: 25px;margin-left:30px">No items in todo list</p>
     </div>
+    </span>
 
-    <div id="upfront">
-        <h2>Add New List</h2>
-        <label for="name"></label>
-        <input type="text" id="name" value=""><br><br>
-        <button onclick="addtask()">Add</button>
-        <button onclick="close1()">Close</button>
-    </div>
-    <div id="upfront1">
-        <h2>Add New Item</h2>
-        <label for="name1"></label>
-        <input type="text" id="name1" value=""><br><br>
-        <button id="btn">Add</button>
-        <button onclick="close2()">Close</button>
-    </div>
-    <script src="./logic.js"></script>
+        <span id="details">
+            <div class="contener" style="justify-content: center;">
+                <div id="details-div" class="board"></div>
+            </div>
+        </span>
+
+
+
+            <div id="toDoModelBoard" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <span class="close" onclick="closeModel('toDoModelBoard')">&times;</span>
+                  <p>Add New list</p>
+                  <input type="text" id="baord_name">
+                  <button onclick="addNewBoard()" >Add</button>
+                  <button onclick="closeModel('toDoModelBoard')">Close</button>
+
+                </div>              
+              </div>
+
+            <div id="toDoModelTask" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <span class="close " onclick="closeModel('toDoModelTask')">&times;</span>
+                  <p>Add New Task</p>
+                  <input type="text" id="task_name">
+                  <button onclick="addNewTaskModalButton()" >Add</button>
+                  <button onclick="closeModel('toDoModelTask')" >Close</button>
+                </div>              
+              </div>
 </body>
+
+<div style="display: none;" id="board_clone">
+<div class="board">
+    <h1 class="border-title" onclick="showOnlyBoard(this)">{{baord_title_value}}</h1>
+    <hr>
+    <ul class="tasklist">
+        
+    </ul>
+    <div class="border-footer">
+    <i class="fa fa-trash-o" onclick="removeBoard(this)"></i>
+    <i class="fa fa-plus"  onclick="showTaskModal(this)"></i>
+    </div>
+</div>
+</div>
+<script src='logic.js'></script>
 </html>

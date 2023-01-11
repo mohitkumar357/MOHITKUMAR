@@ -1,125 +1,142 @@
-const tasklist=[];
-const addtask=function(){
-    const name=document.getElementById("name").value 
-    console.log(name);
-    const tempObj={
-        id:Date.now(),
-        taskName:name
+// Get the modal
+var modal = document.getElementById("toDoModelBoard");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+
+// Get the modal
+var modalTask = document.getElementById("toDoModelTask");
+
+
+
+function closeModel(id){
+    document.getElementById(id).style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+
+window.onclick = function(event) {
+  if (event.target == modalTask) {
+    modalTask.style.display = "none";
+  }
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+
+var taskOBJ = null;
+
+
+function removeBoard(obj){
+    var board = obj.closest(".board");
+        board.remove();
+
+}
+function addNewTaskModalButton(){
+    addNewTask(taskOBJ);
+    // taskOBJ = null;
+    modalTask.style.display = "none";
+}
+function showTaskModal(obj){
+    taskOBJ = obj;
+    modalTask.style.display = "block";
+}
+function showTaskModalOnly(){
+    modalTask.style.display = "block";
+
+}
+function addNewTask(obj){
+    var markButtone = document.createElement("button");
+    markButtone.setAttribute("class", "markAsDone");
+    markButtone.innerHTML = 'Mark as done';
+    markButtone.addEventListener('click', function handleClick(event) {
+        console.log('element clicked bttone', event);
+        markAsDoneFN(this)
+      });
+
+    // markButtone.onclick = function(markButtone){
+    //     markAsDoneFN(this)
+    // };
+    var board = obj.closest(".board");
+    var ul = board.children[2];
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode(document.getElementById("task_name").value));
+    li.appendChild(markButtone);
+    ul.appendChild(li);  
+    document.getElementById("task_name").value = "";
+    // console.log(board.children[2]);
+}
+
+
+function addNewBoard(){
+    closeModel("toDoModelBoard");
+    var data = document.getElementById("board_clone").innerHTML;
+    var title = document.getElementById("baord_name").value;
+    if(title==""){
+        alert("OOHHOO , Please Enter Name")
+        return false;
     }
-    tasklist.push(tempObj);
-    console.log(tasklist);
-    addTaskOnScreen();
+    data= data.replace("{{baord_title_value}}",title);    
+    document.getElementsByClassName("contener")[0].innerHTML=document.getElementsByClassName("contener")[0].innerHTML+data;    
+    document.getElementById("baord_name").value = "";
+    document.getElementById("noitem").remove();
+    
 }
-function addTaskOnScreen(){
-    const element=document.createElement("div");
-    element.setAttribute("class","child");
-    element.innerText=tasklist[tasklist.length-1].taskName;
-    const parentElement=document.getElementById("main_parent");
-    parentElement.appendChild(element);
-    const hor_line=document.createElement("hr");
-    hor_line.setAttribute("class","line");
-    element.appendChild(hor_line);
-    const del_icon=document.createElement("i");
-    del_icon.setAttribute("class","fa fa-trash del");
-    element.appendChild(del_icon);
-    const add_icon=document.createElement("i");
-    add_icon.setAttribute("class","fa-solid fa-circle-plus add");
-    element.appendChild(add_icon);
-
-    let upfront=document.getElementById("upfront");
-    upfront.style.display="none";
-    parentElement.style.filter="blur(0px)";
-    const white=document.getElementsByClassName("white");
-    white[0].style.display="none";
-
-    let upfront1=document.getElementById('upfront1');
-    add_icon.addEventListener('click',function(){
-        upfront1.style.display="block";
-        parentElement.style.filter="blur(12px)";
-    })
-
-    // let heading=tasklist[tasklist.length-1].taskName;
-    // heading.addEventListener('click',function(){
-    //     parentElement.style.display="none";
-    // })
-
-    const todo=document.createElement("div");
-    todo.setAttribute("class","to-do");
-    todo.setAttribute("id","todoContainer");
-    element.appendChild(todo);
-    const btn=document.getElementById("btn");
-    const name1=document.getElementById("name1");
-    // const tasklist2=[];
-    // const tempObj2={
-    //     taskName2:name1
-    // }
-    // tasklist2.push(tempObj2);
-
-    btn.addEventListener('click',function(){
-        parentElement.style.filter="blur(0px)";
-        upfront1.style.display="none";
-        let paragraph=document.createElement('p');
-        paragraph.classList.add('paragraph-styling');
-        todo.appendChild(paragraph);
-        paragraph.innerText=name1.value;
-        name1.value="";
-        // todo.innerText=tasklist2[tasklist2.length-1].taskName2;
-        let mark=document.createElement("button");
-        mark.setAttribute("id","mark");
-        mark.innerHTML="Mark Done";
-        mark.style.backgroundColor="blue";
-        mark.style.color="white";
-        mark.style.width="70px";
-        mark.style.height="20px";
-        mark.style.textAlign="center";
-        mark.style.borderRadius="5px";
-        mark.style.fontSize="10px";
-        mark.style.padding="0px";
-        todo.appendChild(mark);
-       
-        mark.addEventListener('click',function(){
-            paragraph.style.textDecoration="line-through";
-            paragraph.style.color="red";
-            mark.style.display="none";
-        })
-
-       
-       
-
-    })
-    // element[0].addEventListener('dblclick',function(){
-    //     parentElement.style.display="none";
-    //     // const container=document.getElementById("parent");
-    //     const white2=document.getElementsByClassName("white2");
-    //     white2[0].style.display="none";
-    //     element[0].style.margin="auto";
-    // })
-z
-    // const del=document.getElementsByClassName("fa fa-trash del");
-    // del.addEventListener('click',function(){
-    // const element=document.getElementsByClassName("child");
-    // element.style.display="none";
-        
-
+function markAsDoneFN(obj){
+    if(obj.innerHTML=="Done"){
+        obj.innerHTML="Mark as done";
+    }else{
+        obj.innerHTML="Done";
+    }
+    obj.closest("li").classList.toggle("checked");    
 }
+function showOnlyBoard(obj){
+    document.getElementById("head_task_title").innerHTML=obj.innerHTML;
+    obj.closest("div").classList.toggle("onlyOne");
+    var baord = document.getElementById("div-1").children;
+    for(var i = 0 ; i < baord.length;i++){
+    if(document.getElementById("div-1").children[i].classList.contains("onlyOne")){
+            
+        }else{
+            document.getElementById("div-1").children[i].style.display = "none";
+        }
+    }
+    // baord
+    // document.getElementById("details-div").innerHTML =obj.closest(".board").innerHTML;    
+    taskOBJ = obj.closest(".board");
+    // document.getElementById("overview").style.display = "none";
+    document.getElementById("topheader").style.display = "none";
+    // document.getElementById("details").style.display = "block";    
+    document.getElementById("topheadertwo").style.display = "flex";
+    document.getElementsByClassName("contener")[0].style.justifyContent = "center";
+    // justify-content: space-between;
+    // center
+}
+function backClick(){
+    document.getElementById("overview").style.display = "block";
+    document.getElementById("topheader").style.display = "flex";
+    document.getElementById("topheadertwo").style.display = "none";
+    // document.getElementById("details").style.display = "none";    
 
 
-function show_upfront(){
-   let upfront=document.getElementById("upfront");
-   const parentElement=document.getElementById("main_parent");
-   upfront.style.display="block";
-   parentElement.style.filter="blur(12px)";
-  
-}
-function close1(){
-    let upfront=document.getElementById("upfront");
-    const parentElement=document.getElementById("main_parent");
-    upfront.style.display="none";
-    parentElement.style.filter="blur(0px)";
-}
-function close2(){
-    let upfront1=document.getElementById("upfront1");
-    const parentElement=document.getElementById("main_parent");
-    upfront1.style.display="none";
-     parentElement.style.filter="blur(0px)";
+    var baord = document.getElementById("div-1").children;
+    for(var i = 0 ; i < baord.length;i++){
+    if(document.getElementById("div-1").children[i].classList.contains("onlyOne")){
+        document.getElementById("div-1").children[i].classList.toggle("onlyOne");
+
+        }else{
+            document.getElementById("div-1").children[i].style.display = "block";
+        }
+    }
+    document.getElementsByClassName("contener")[0].style.justifyContent = "space-between";
+ 
 }
